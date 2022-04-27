@@ -1,0 +1,24 @@
+
+# Next.JS Source Code
+public/
+src/
+node_modules/*
+.next/
+.env.*
+.gitignore
+.git/
+.github
+!.env.production
+!.env.development
+
+
+
+# Development Setup
+
+commitlint.config.js
+README.md
+eslintrc.js
+prettier.config.js
+.eslintignore
+.editorconfig
+.husky

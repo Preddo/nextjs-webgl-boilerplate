@@ -1,0 +1,26 @@
+steps:
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install"]
+
+  - name: 'ubuntu'
+    entrypoint: 'bash'
+    args: ['-c', "export YOUR_SECRET_SECRET=$$YOUR_SECRET_SECRET &&
+                  echo -n  YOUR_SECRET_SECRET= > .env.development &&
+                  printenv YOUR_SECRET_SECRET >> .env.development &&
+                  echo NODE_ENV=development >> .env.development"]
+    secretEnv: ['YOUR_SECRET_SECRET']
+
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "build"]
+    env:
+    - 'NEXT_PUBLIC_PUBLIC_SECRET=<public-secret>'
+
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ["app", "deploy"]
+
+timeout: "600s"
+
+availableSecrets:
+  secretManager:
+  - versionName: projects/<number-of-the-project>/secrets/YOUR_SECRET_SECRET/versions/latest
+    env: 'YOUR_SECRET_SECRET'

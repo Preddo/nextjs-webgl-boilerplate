@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 3.2rem 1rem;
+  background-color: var(--beige);
+
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+
+
+}
+
+.text {
+  max-width: 900px;
+}
+
+.text p {
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+}
+
+.experience-container {
+  height: 600px;
+  width: 100%;
+  margin: 3.2rem 0;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+
+
