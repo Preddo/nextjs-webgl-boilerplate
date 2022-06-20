@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
-import Experience from '../Experience'
-import Resources from '../Utils/Resources'
+import Experience from 'experiences/shared/core/Experience'
+import Resources from 'experiences/shared/utils/Resources'
 
 export default class Floor {
   experience: Experience
@@ -16,8 +16,8 @@ export default class Floor {
   material: THREE.MeshStandardMaterial
   mesh: THREE.Mesh
 
-  constructor() {
-    this.experience = new Experience()
+  constructor(experience: Experience) {
+    this.experience = experience
     this.scene = this.experience.scene
     this.resources = this.experience.resources
 

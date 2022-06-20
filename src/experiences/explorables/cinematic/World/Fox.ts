@@ -2,10 +2,10 @@ import GUI from 'lil-gui'
 import * as THREE from 'three'
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
-import Experience from '../Experience'
-import Debug from '../Utils/Debug'
-import Resources from '../Utils/Resources'
-import Time from '../Utils/Time'
+import Experience from 'experiences/shared/core/Experience'
+import Debug from 'experiences/shared/utils/Debug'
+import Resources from 'experiences/shared/utils/Resources'
+import Time from 'experiences/shared/utils/Time'
 
 export default class Fox {
   experience: Experience
@@ -22,8 +22,8 @@ export default class Fox {
     play: (name: string) => void | null
   }
 
-  constructor() {
-    this.experience = new Experience()
+  constructor(experience: Experience) {
+    this.experience = experience
     this.scene = this.experience.scene
     this.resources = this.experience.resources
     this.time = this.experience.time

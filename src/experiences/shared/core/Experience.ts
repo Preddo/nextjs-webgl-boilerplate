@@ -1,15 +1,12 @@
 import * as THREE from 'three'
 
+import Debug from 'experiences/shared/utils/Debug'
+import Resources, { ISource } from 'experiences/shared/utils/Resources'
+import Sizes from 'experiences/shared/utils/Sizes'
+import Time from 'experiences/shared/utils/Time'
+
 import Camera from './Camera'
 import Renderer from './Renderer'
-import sources from './sources'
-import Debug from './Utils/Debug'
-import Resources from './Utils/Resources'
-import Sizes from './Utils/Sizes'
-import Time from './Utils/Time'
-import World from './World/World'
-
-let instance = null
 
 export default class Experience {
   canvas: HTMLCanvasElement
@@ -20,16 +17,12 @@ export default class Experience {
   resources: Resources
   camera: Camera
   renderer: Renderer
-  world: World
 
-  constructor(canvas?: HTMLCanvasElement, container?: HTMLElement) {
-    // Singleton
-    if (instance) {
-      return instance
-    }
-
-    instance = this
-
+  constructor(
+    canvas: HTMLCanvasElement,
+    container: HTMLElement,
+    sources: ISource[],
+  ) {
     // Options
     this.canvas = canvas
 
@@ -39,9 +32,8 @@ export default class Experience {
     this.time = new Time()
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)
-    this.camera = new Camera()
-    this.renderer = new Renderer()
-    this.world = new World()
+    this.camera = new Camera(this)
+    this.renderer = new Renderer(this)
 
     // Resize event
     this.sizes.on('resize', () => {
@@ -52,9 +44,6 @@ export default class Experience {
     this.time.on('tick', () => {
       this.update()
     })
-
-    // Global access
-    window.experience = this
   }
 
   resize(): void {
@@ -64,7 +53,6 @@ export default class Experience {
 
   update(): void {
     this.camera.update()
-    this.world.update()
     this.renderer.update()
   }
 

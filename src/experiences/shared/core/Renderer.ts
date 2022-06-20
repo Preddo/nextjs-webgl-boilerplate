@@ -1,8 +1,9 @@
 import * as THREE from 'three'
 
+import Sizes from 'experiences/shared/utils/Sizes'
+
 import Camera from './Camera'
 import Experience from './Experience'
-import Sizes from './Utils/Sizes'
 
 export default class Renderer {
   experience: Experience
@@ -12,8 +13,8 @@ export default class Renderer {
   camera: Camera
   instance: THREE.WebGLRenderer
 
-  constructor() {
-    this.experience = new Experience()
+  constructor(experience: Experience) {
+    this.experience = experience
     this.canvas = this.experience.canvas
     this.sizes = this.experience.sizes
     this.scene = this.experience.scene
@@ -27,6 +28,7 @@ export default class Renderer {
       canvas: this.canvas,
       antialias: true,
     })
+
     this.instance.physicallyCorrectLights = true
     this.instance.outputEncoding = THREE.sRGBEncoding
     this.instance.toneMapping = THREE.CineonToneMapping

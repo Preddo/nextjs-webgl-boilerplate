@@ -1,8 +1,4 @@
-export interface ISource {
-  name: string
-  type: string
-  path: string | string[]
-}
+import { ISource } from 'experiences/shared/utils/Resources'
 
 export default [
   {
@@ -31,10 +27,5 @@ export default [
     name: 'foxModel',
     type: 'gltfModel',
     path: 'models/Fox/glTF/Fox.gltf',
-  },
-  {
-    name: 'ghostModel',
-    type: 'gltfModel',
-    path: 'models/Ghosts/ghosts.glb',
   },
 ] as ISource[]

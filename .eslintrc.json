@@ -70,6 +70,7 @@
           "newlinesBetween": "always", // new line between groups
           "groups": [
             "module",
+            "/experiences/",
             "parent",
             ["sibling", "index"]
           ],

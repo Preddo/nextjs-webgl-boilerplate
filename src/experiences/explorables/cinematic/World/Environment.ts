@@ -1,9 +1,9 @@
 import GUI from 'lil-gui'
 import * as THREE from 'three'
 
-import Experience from '../Experience'
-import Debug from '../Utils/Debug'
-import Resources from '../Utils/Resources'
+import Experience from 'experiences/shared/core/Experience'
+import Debug from 'experiences/shared/utils/Debug'
+import Resources from 'experiences/shared/utils/Resources'
 
 export default class Environment {
   experience: Experience
@@ -18,8 +18,8 @@ export default class Environment {
     updateMaterials?: () => void
   }
 
-  constructor() {
-    this.experience = new Experience()
+  constructor(experience: Experience) {
+    this.experience = experience
     this.scene = this.experience.scene
     this.resources = this.experience.resources
     this.debug = this.experience.debug

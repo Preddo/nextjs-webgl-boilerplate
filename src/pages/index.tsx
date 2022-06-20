@@ -1,19 +1,26 @@
-import Experience from 'experiences/dynamics/Experience'
 import Head from 'next/head'
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect } from 'react'
 
 export default function Home(): ReactElement {
-  const [, setExperience] = useState<Experience>(null)
-
   useEffect(() => {
-    const exp = new Experience(
-      document.querySelector('canvas.webgl'),
-      document.querySelector('.experience-container'),
-    )
+    async function startExplorable() {
+      const CinemacticStorie = (
+        await import('experiences/explorables/cinematic/storie')
+      ).default
 
-    console.log(exp)
+      /* eslint-disable no-new */
+      new CinemacticStorie(
+        document.querySelector('canvas.webgl'),
+        document.querySelector('#experience-01'),
+      )
 
-    setExperience(exp)
+      new CinemacticStorie(
+        document.querySelector('canvas.webgl-02'),
+        document.querySelector('#experience-02'),
+      )
+    }
+
+    startExplorable()
   }, [])
 
   return (
@@ -58,7 +65,7 @@ export default function Home(): ReactElement {
             doloremque, cum, mollitia eius.
           </p>
         </div>
-        <div className="experience-container">
+        <div className="experience-container" id="experience-01">
           <canvas className="webgl"></canvas>
         </div>
         <div className="text">
@@ -86,6 +93,9 @@ export default function Home(): ReactElement {
             natus blanditiis beatae aliquid ut totam dolore cupiditate in
             doloremque, cum, mollitia eius.
           </p>
+        </div>
+        <div className="experience-container" id="experience-02">
+          <canvas className="webgl-02"></canvas>
         </div>
       </main>
     </div>

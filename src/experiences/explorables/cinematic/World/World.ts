@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
-import Experience from '../Experience'
-import Resources from '../Utils/Resources'
+import Experience from 'experiences/shared/core/Experience'
+import Resources from 'experiences/shared/utils/Resources'
 
 import Environment from './Environment'
 import Floor from './Floor'
@@ -15,17 +15,17 @@ export default class World {
   fox: Fox
   environment: Environment
 
-  constructor() {
-    this.experience = new Experience()
+  constructor(experience: Experience) {
+    this.experience = experience
     this.scene = this.experience.scene
     this.resources = this.experience.resources
 
     // Wait for resources
     this.resources.on('ready', () => {
       // Setup
-      this.floor = new Floor()
-      this.fox = new Fox()
-      this.environment = new Environment()
+      this.floor = new Floor(this.experience)
+      this.fox = new Fox(this.experience)
+      this.environment = new Environment(this.experience)
     })
   }
 

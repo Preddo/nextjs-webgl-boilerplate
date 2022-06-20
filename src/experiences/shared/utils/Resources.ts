@@ -1,9 +1,13 @@
 import * as THREE from 'three'
 import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
-import { ISource } from '../sources'
-
 import EventEmitter from './EventEmitter'
+
+export interface ISource {
+  name: string
+  type: string
+  path: string | string[]
+}
 
 export default class Resources extends EventEmitter {
   sources: ISource[]
