@@ -9,6 +9,7 @@ import Camera from './Camera'
 import Renderer from './Renderer'
 
 export default class Experience {
+  container: HTMLElement
   canvas: HTMLCanvasElement
   debug: Debug
   sizes: Sizes
@@ -18,17 +19,15 @@ export default class Experience {
   camera: Camera
   renderer: Renderer
 
-  constructor(
-    canvas: HTMLCanvasElement,
-    container: HTMLElement,
-    sources: ISource[],
-  ) {
+  constructor(containerSelector: string, sources: ISource[]) {
+    this.container = document.querySelector(containerSelector) as HTMLElement
     // Options
-    this.canvas = canvas
+    this.canvas = document.createElement('canvas')
+    this.container.appendChild(this.canvas)
 
     // Setup
     this.debug = new Debug()
-    this.sizes = new Sizes(container)
+    this.sizes = new Sizes(this.container)
     this.time = new Time()
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)
@@ -82,5 +81,7 @@ export default class Experience {
     this.renderer.instance.dispose()
 
     if (this.debug.active) this.debug.ui.destroy()
+
+    this.container.removeChild(this.canvas)
   }
 }

@@ -1,26 +1,29 @@
+/* eslint-disable no-new */
+
 import Head from 'next/head'
 import { ReactElement, useEffect } from 'react'
 
 export default function Home(): ReactElement {
   useEffect(() => {
+    let exp1 = null
+    let exp2 = null
+
     async function startExplorable() {
       const CinemacticStorie = (
         await import('experiences/explorables/cinematic/storie')
       ).default
 
-      /* eslint-disable no-new */
-      new CinemacticStorie(
-        document.querySelector('canvas.webgl'),
-        document.querySelector('#experience-01'),
-      )
-
-      new CinemacticStorie(
-        document.querySelector('canvas.webgl-02'),
-        document.querySelector('#experience-02'),
-      )
+      exp1 = new CinemacticStorie('#experience-01')
+      exp2 = new CinemacticStorie('#experience-02')
     }
 
     startExplorable()
+
+    return () => {
+      console.log('destroy')
+      exp1.destroy()
+      exp2.destroy()
+    }
   }, [])
 
   return (
@@ -65,9 +68,7 @@ export default function Home(): ReactElement {
             doloremque, cum, mollitia eius.
           </p>
         </div>
-        <div className="experience-container" id="experience-01">
-          <canvas className="webgl"></canvas>
-        </div>
+        <div className="experience-container" id="experience-01"></div>
         <div className="text">
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem
@@ -94,9 +95,7 @@ export default function Home(): ReactElement {
             doloremque, cum, mollitia eius.
           </p>
         </div>
-        <div className="experience-container" id="experience-02">
-          <canvas className="webgl-02"></canvas>
-        </div>
+        <div className="experience-container" id="experience-02"></div>
       </main>
     </div>
   )
