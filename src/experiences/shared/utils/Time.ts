@@ -1,10 +1,12 @@
 import EventEmitter from './EventEmitter'
 
 export default class Time extends EventEmitter {
+  paused: boolean
   start: number
   current: number
   elapsed: number
   delta: number
+  animationFrameId: number
 
   constructor() {
     super()
@@ -15,14 +17,15 @@ export default class Time extends EventEmitter {
     this.elapsed = 0
     this.delta = 16
 
-    window.requestAnimationFrame(() => {
+    this.animationFrameId = window.requestAnimationFrame(() => {
       this.tick()
     })
   }
 
   tick(): void {
     const currentTime = Date.now()
-    this.delta = currentTime - this.current
+
+    this.delta = this.paused ? 0 : currentTime - this.current
     this.current = currentTime
     this.elapsed = this.current - this.start
 
@@ -31,5 +34,13 @@ export default class Time extends EventEmitter {
     window.requestAnimationFrame(() => {
       this.tick()
     })
+  }
+
+  pause(): void {
+    this.paused = true
+  }
+
+  play(): void {
+    this.paused = false
   }
 }

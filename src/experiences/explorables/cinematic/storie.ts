@@ -7,7 +7,7 @@ export default class Storie extends Experience {
   world: World
 
   constructor(containerSelector: string) {
-    super(containerSelector, sources)
+    super(containerSelector, { sources })
 
     this.world = new World(this)
   }

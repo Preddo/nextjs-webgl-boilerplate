@@ -15,12 +15,17 @@ export default function Home(): ReactElement {
 
       exp1 = new CinemacticStorie('#experience-01')
       exp2 = new CinemacticStorie('#experience-02')
+
+      exp1.time.pause()
+
+      setTimeout(() => {
+        exp1.time.play()
+      }, 3000)
     }
 
     startExplorable()
 
     return () => {
-      console.log('destroy')
       exp1.destroy()
       exp2.destroy()
     }

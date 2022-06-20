@@ -6,7 +6,12 @@ import Sizes from 'experiences/shared/utils/Sizes'
 import Time from 'experiences/shared/utils/Time'
 
 import Camera from './Camera'
-import Renderer from './Renderer'
+import Renderer, { IRendererOptions } from './Renderer'
+
+interface IExperienceOptions {
+  sources: ISource[]
+  renderer?: IRendererOptions
+}
 
 export default class Experience {
   container: HTMLElement
@@ -19,7 +24,7 @@ export default class Experience {
   camera: Camera
   renderer: Renderer
 
-  constructor(containerSelector: string, sources: ISource[]) {
+  constructor(containerSelector: string, { sources }: IExperienceOptions) {
     this.container = document.querySelector(containerSelector) as HTMLElement
     // Options
     this.canvas = document.createElement('canvas')
@@ -52,7 +57,7 @@ export default class Experience {
 
   update(): void {
     this.camera.update()
-    this.renderer.update()
+    // this.renderer.update()
   }
 
   destroy(): void {
