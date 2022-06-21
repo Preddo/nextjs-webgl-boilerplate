@@ -3,17 +3,27 @@
 import Head from 'next/head'
 import { ReactElement, useEffect } from 'react'
 
+import CinemacticStorie from 'experiences/explorables/cinematic/storie'
+
 export default function Home(): ReactElement {
   useEffect(() => {
-    let exp1 = null
-    let exp2 = null
+    let exp1: CinemacticStorie = null
+    let exp2: CinemacticStorie = null
 
     async function startExplorable() {
       const CinemacticStorie = (
         await import('experiences/explorables/cinematic/storie')
       ).default
 
-      exp1 = new CinemacticStorie('#experience-01')
+      exp1 = new CinemacticStorie('#experience-01', {
+        rendererOptions: {
+          enableStaticRenderer: true,
+          enableAntialias: true,
+          enableShadowMap: true,
+          physicallyCorrectLights: true,
+        },
+      })
+
       exp2 = new CinemacticStorie('#experience-02')
 
       exp1.time.pause()

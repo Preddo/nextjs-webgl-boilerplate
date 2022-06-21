@@ -8,9 +8,9 @@ import Time from 'experiences/shared/utils/Time'
 import Camera from './Camera'
 import Renderer, { IRendererOptions } from './Renderer'
 
-interface IExperienceOptions {
-  sources: ISource[]
-  renderer?: IRendererOptions
+export interface IExperienceOptions {
+  sources?: ISource[]
+  rendererOptions?: IRendererOptions
 }
 
 export default class Experience {
@@ -24,7 +24,10 @@ export default class Experience {
   camera: Camera
   renderer: Renderer
 
-  constructor(containerSelector: string, { sources }: IExperienceOptions) {
+  constructor(
+    containerSelector: string,
+    { sources, rendererOptions }: IExperienceOptions,
+  ) {
     this.container = document.querySelector(containerSelector) as HTMLElement
     // Options
     this.canvas = document.createElement('canvas')
@@ -37,7 +40,7 @@ export default class Experience {
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)
     this.camera = new Camera(this)
-    this.renderer = new Renderer(this)
+    this.renderer = new Renderer(this, rendererOptions)
 
     // Resize event
     this.sizes.on('resize', () => {
@@ -57,7 +60,7 @@ export default class Experience {
 
   update(): void {
     this.camera.update()
-    // this.renderer.update()
+    this.renderer.update()
   }
 
   destroy(): void {

@@ -6,6 +6,7 @@ import Camera from './Camera'
 import Experience from './Experience'
 
 export interface IRendererOptions {
+  enableStaticRenderer?: boolean
   enableAntialias?: boolean
   physicallyCorrectLights?: boolean
   enableShadowMap?: boolean
@@ -18,6 +19,7 @@ export default class Renderer {
   scene: THREE.Scene
   camera: Camera
   instance: THREE.WebGLRenderer
+  staticRendererEnabled: boolean
 
   constructor(experience: Experience, options?: IRendererOptions) {
     this.experience = experience
@@ -26,6 +28,8 @@ export default class Renderer {
     this.scene = this.experience.scene
     this.camera = this.experience.camera
 
+    this.staticRendererEnabled = options?.enableStaticRenderer || false
+
     this.setInstance(options)
   }
 
@@ -33,6 +37,9 @@ export default class Renderer {
     this.instance = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: options?.enableAntialias || false,
+      alpha: false,
+      powerPreference: 'low-power',
+      failIfMajorPerformanceCaveat: true,
     })
 
     this.instance.physicallyCorrectLights =
@@ -45,10 +52,14 @@ export default class Renderer {
     this.instance.setSize(this.sizes.width, this.sizes.height)
     this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2))
 
-    this.experience.camera.controls.addEventListener(
-      'change',
-      this.update.bind(this),
-    )
+    if (this.staticRendererEnabled) {
+      this.instance.render(this.scene, this.camera.instance)
+
+      this.experience.camera.controls.addEventListener(
+        'change',
+        this.staticUpdate.bind(this),
+      )
+    }
   }
 
   resize(): void {
@@ -57,6 +68,12 @@ export default class Renderer {
   }
 
   update(): void {
+    if (!this.staticRendererEnabled) {
+      this.instance.render(this.scene, this.camera.instance)
+    }
+  }
+
+  staticUpdate(): void {
     this.instance.render(this.scene, this.camera.instance)
   }
 }
