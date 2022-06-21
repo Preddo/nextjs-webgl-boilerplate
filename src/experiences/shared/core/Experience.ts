@@ -34,9 +34,9 @@ export default class Experience {
     this.container.appendChild(this.canvas)
 
     // Setup
-    this.debug = new Debug()
+    this.debug = new Debug(this)
     this.sizes = new Sizes(this.container)
-    this.time = new Time()
+    this.time = new Time(this)
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)
     this.camera = new Camera(this)
